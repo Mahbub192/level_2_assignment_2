@@ -44,9 +44,7 @@ const getAllUser = async (req: Request, res: Response) => {
 const getSingleUser = async (req: Request, res: Response) => {
   try {
     const id = req.params.userId
-    console.log(47, id)
     const ID = parseInt(id)
-    console.log(49, ID)
     const result = await UserServices.getSingleUser(ID)
     res.status(200).json({
       success: true,
@@ -87,7 +85,6 @@ const deleteUser = async (req: Request, res: Response) => {
     const id = req.params.userId
     const ID = parseInt(id)
     const result = await UserServices.deleteUser(ID)
-    console.log(78, result)
     res.status(200).json({
       status: 'success',
       message: 'User deleted successfully',
@@ -108,16 +105,37 @@ const insertProduct = async (req: Request, res: Response) => {
     const id = req.params.userId
     const ID = parseInt(id)
     const product = req.body
-    const result = await UserServices.insertProductDB(ID, product)
+    await UserServices.insertProductDB(ID, product)
     res.status(200).json({
       success: true,
       message: 'Order created successfully!',
       data: null,
     })
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     res.status(500).json({
       success: false,
-      message: error.message || 'Not deleted',
+      message: error.message || 'No update',
+      error: error,
+    })
+  }
+}
+
+const getProduct = async (req: Request, res: Response) => {
+  try {
+    const id = req.params.userId
+    const ID = parseInt(id)
+    const result = await UserServices.getProductDB(ID)
+    res.status(200).json({
+      success: true,
+      message: 'get product successfully',
+      data: result,
+    })
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: error.message || 'No update',
       error: error,
     })
   }
@@ -130,4 +148,5 @@ export const UserControllers = {
   updateUser,
   deleteUser,
   insertProduct,
+  getProduct,
 }

@@ -8,6 +8,7 @@ const createUserDB = async (user: TUser) => {
     throw new Error('User name already exists!')
   } else {
     const result = await User.create(user)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
     const { orders, password, ...userDataWithoutSensitiveInfo } =
       result.toObject()
     console.log(userDataWithoutSensitiveInfo)
@@ -90,6 +91,14 @@ const insertProductDB = async (id: number, newOrder: TUser) => {
   const result = await User.updateOne({ userId: id }, updateOne)
   return result
 }
+
+const getProductDB = async (id: number) => {
+  const result = await User.findOne({ userId: id }).select({
+    orders: 1,
+  })
+  return result
+}
+
 export const UserServices = {
   createUserDB,
   getAllUserDB,
@@ -97,4 +106,5 @@ export const UserServices = {
   updateUser,
   deleteUser,
   insertProductDB,
+  getProductDB,
 }
