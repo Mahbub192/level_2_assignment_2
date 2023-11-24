@@ -1,8 +1,6 @@
 import { TUser } from '../interfaces/user.interfaces'
 import { User } from '../modules/user.module'
 
-import { Document, Model } from 'mongoose'
-
 const createUserDB = async (user: TUser) => {
   if (await User.isUserExists(user.userId)) {
     throw new Error('User Id already exists!')
@@ -36,6 +34,12 @@ const updateUser = async (
   id: number,
   userData: Partial<TUser>,
 ): Promise<TUser | null> => {
+  if (await User.isUserExists(id)) {
+    const result = await User.findOne({ userId: id }).select({
+      password: 0,
+    })
+    return result
+  }
   const filter = { userId: id }
   const updateDoc = {
     $set: userData,
@@ -45,8 +49,7 @@ const updateUser = async (
     const result = await User.findOneAndUpdate(filter, updateDoc, { new: true })
     return result
   } catch (error) {
-    console.error('Error updating user:', error)
-    throw error
+    throw new Error('Error updating user:')
   }
 }
 

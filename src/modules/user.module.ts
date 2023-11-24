@@ -1,5 +1,7 @@
 import { Schema, model } from 'mongoose'
 import { TUser, UserModel } from '../interfaces/user.interfaces'
+import bcrypt from 'bcrypt'
+import config from '../app/config'
 
 const userSchema = new Schema<TUser, UserModel>({
   userId: { type: Number, required: true, unique: true, trim: true },
@@ -32,10 +34,17 @@ userSchema.statics.isUserNameExists = async function (name: string) {
   const existingUser = await User.findOne({ username: name })
   return existingUser
 }
-// userSchema.statics.isUserExists = async function (id: number) {
-//   console.log(28, id)
-//   const existingUser = await User.findOne({ id })
-//   return existingUser
-// }
+
+userSchema.pre('save', async function (next) {
+  // console.log(this, 'pre hook : we will save  data');
+  // eslint-disable-next-line @typescript-eslint/no-this-alias
+  const user = this // doc
+  // hashing password and save into DB
+  user.password = await bcrypt.hash(
+    user.password,
+    Number(config.bcrypt_salt_rounds),
+  )
+  next()
+})
 
 export const User = model<TUser, UserModel>('User', userSchema)
