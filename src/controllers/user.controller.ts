@@ -1,11 +1,13 @@
 import { UserServices } from './../services/user.services'
 import { Request, Response } from 'express'
+import { UserValidationSchema } from './userZod'
 
 const createStudent = async (req: Request, res: Response) => {
   try {
     const user = req.body
     console.log(7, user)
-    const result = await UserServices.createUserDB(user)
+    const zodData = UserValidationSchema.parse(user)
+    const result = await UserServices.createUserDB(zodData)
 
     res.status(200).json({
       success: true,
@@ -34,14 +36,18 @@ const getSingleUser = async (req: Request, res: Response) => {
   try {
     const id = req.params.id
     console.log(36, id)
-    const result = await UserServices.getSingleUser(parseInt(id))
+    const result = await UserServices.getSingleUser(id)
     res.status(200).json({
       success: true,
       message: 'Get A single User',
       data: result,
     })
   } catch (error) {
-    console.log(error)
+    res.status(200).json({
+      success: false,
+      message: 'Something was wrong',
+      error: error,
+    })
   }
 }
 

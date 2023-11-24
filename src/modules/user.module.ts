@@ -2,8 +2,8 @@ import { Schema, model } from 'mongoose'
 import { TUser } from '../interfaces/user.interfaces'
 
 const userSchema = new Schema<TUser>({
-  userId: { type: Number, required: true, unique: true },
-  username: { type: String, required: true, unique: true },
+  userId: { type: Number, required: true, unique: true, trim: true },
+  username: { type: String, required: true, unique: true, trim: true },
   password: { type: String, required: true },
   fullName: {
     firstName: { type: String, required: true },
@@ -11,7 +11,11 @@ const userSchema = new Schema<TUser>({
   },
   age: { type: Number, required: true },
   email: { type: String, required: true },
-  isActive: ['active', 'blocked'],
+  isActive: {
+    type: String,
+    enum: ['active', 'blocked'],
+    default: 'active',
+  },
   hobbies: [String],
   address: {
     street: { type: String },

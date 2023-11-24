@@ -11,9 +11,9 @@ const getAllUserDB = async () => {
   return result
 }
 
-const getSingleUser = async (id: number) => {
+const getSingleUser = async (id: string) => {
   console.log(15, id)
-  const result = await User.findOne({ userId: id })
+  const result = await User.findById(id)
   return result
 }
 
