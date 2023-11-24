@@ -23,7 +23,14 @@ const getAllUserDB = async () => {
 const getSingleUser = async (id: number) => {
   if (await User.isUserExists(id)) {
     const result = await User.findOne({ userId: id }).select({
-      password: 0,
+      userId: 1,
+      username: 1,
+      fullName: 1,
+      age: 1,
+      email: 1,
+      isActive: 1,
+      hobbies: 1,
+      address: 1,
     })
     return result
   } else {

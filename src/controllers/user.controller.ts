@@ -13,6 +13,7 @@ const createUser = async (req: Request, res: Response) => {
       message: 'user created successfully',
       data: result,
     })
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     res.status(500).json({
       success: false,
@@ -30,8 +31,13 @@ const getAllUser = async (req: Request, res: Response) => {
       message: 'Get all user from DataBase',
       data: result,
     })
-  } catch (error) {
-    console.log(error)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: error.message || 'User id or user name are already exist',
+      error: error,
+    })
   }
 }
 
@@ -44,10 +50,11 @@ const getSingleUser = async (req: Request, res: Response) => {
       message: 'Get A single User',
       data: result,
     })
-  } catch (error) {
-    res.status(200).json({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    res.status(500).json({
       success: false,
-      message: 'Something was wrong2',
+      message: error.message || 'Can not find this user',
       error: error,
     })
   }
@@ -63,11 +70,12 @@ const updateUser = async (req: Request, res: Response) => {
       message: 'User updated successfully',
       data: result,
     })
-  } catch (error) {
-    console.log(error)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
     res.status(500).json({
-      status: 'fail',
-      message: error || 'Something went wrong',
+      success: false,
+      message: error.message || 'User information update faeild',
+      error: error,
     })
   }
 }
@@ -81,11 +89,12 @@ const deleteUser = async (req: Request, res: Response) => {
       message: 'User deleted successfully',
       data: result,
     })
-  } catch (error) {
-    console.log(error)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
     res.status(500).json({
-      status: 'false',
-      message: error || 'Something went wrong',
+      success: false,
+      message: error.message || 'Not deleted',
+      error: error,
     })
   }
 }

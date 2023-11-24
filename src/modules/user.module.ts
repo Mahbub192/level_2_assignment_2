@@ -24,6 +24,20 @@ const userSchema = new Schema<TUser, UserModel>({
     city: { type: String },
     country: { type: String },
   },
+  orders: {
+    type: Array,
+    of: {
+      productName: {
+        type: String,
+      },
+      price: {
+        type: Number,
+      },
+      quantity: {
+        type: Number,
+      },
+    },
+  },
 })
 
 userSchema.statics.isUserExists = async function (id: number) {
