@@ -128,7 +128,7 @@ const getProduct = async (req: Request, res: Response) => {
     const result = await UserServices.getProductDB(ID)
     res.status(200).json({
       success: true,
-      message: 'get product successfully',
+      message: 'Order fetched successfully!',
       data: result,
     })
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

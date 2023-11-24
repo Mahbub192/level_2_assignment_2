@@ -93,10 +93,14 @@ const insertProductDB = async (id: number, newOrder: TUser) => {
 }
 
 const getProductDB = async (id: number) => {
-  const result = await User.findOne({ userId: id }).select({
-    orders: 1,
-  })
-  return result
+  if (await User.isUserExists(id)) {
+    const result = await User.findOne({ userId: id }).select({
+      orders: 1,
+    })
+    return result
+  } else {
+    throw new Error('NO user for this id')
+  }
 }
 
 export const UserServices = {
