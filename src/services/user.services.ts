@@ -8,7 +8,9 @@ const createUserDB = async (user: TUser) => {
     throw new Error('User name already exists!')
   } else {
     const result = await User.create(user)
-    return result
+    const { orders, password, ...userDataWithoutSensitiveInfo } = result?._doc
+    console.log(userDataWithoutSensitiveInfo)
+    return userDataWithoutSensitiveInfo
   }
 }
 
@@ -44,6 +46,7 @@ const updateUser = async (
   if (await User.isUserExists(id)) {
     const result = await User.findOne({ userId: id }).select({
       password: 0,
+      _id: 0,
     })
     return result
   }
