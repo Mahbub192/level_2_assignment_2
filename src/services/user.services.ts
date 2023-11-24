@@ -17,4 +17,27 @@ const getSingleUser = async (id: string) => {
   return result
 }
 
-export const UserServices = { createUserDB, getAllUserDB, getSingleUser }
+const updateUser = async (
+  id: string,
+  userData: TUser,
+): Promise<TUser | null> => {
+  const result = await User.findByIdAndUpdate(id, userData, {
+    new: true,
+    runValidators: true,
+  })
+
+  return result
+}
+
+const deleteUser = async (id: string): Promise<TUser | null> => {
+  const result = await User.findByIdAndDelete(id)
+  return result
+}
+
+export const UserServices = {
+  createUserDB,
+  getAllUserDB,
+  getSingleUser,
+  updateUser,
+  deleteUser,
+}

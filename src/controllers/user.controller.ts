@@ -50,9 +50,45 @@ const getSingleUser = async (req: Request, res: Response) => {
     })
   }
 }
+const updateUser = async (req: Request, res: Response) => {
+  try {
+    const userData = req.body
+    const id = req.params.id
+    const result = await UserServices.updateUser(id, userData)
+    res.status(200).json({
+      status: 'success',
+      message: 'User updated successfully',
+      data: result,
+    })
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({
+      status: 'fail',
+      message: error || 'Something went wrong',
+    })
+  }
+}
+const deleteUser = async (req: Request, res: Response) => {
+  try {
+    const id = req.params.id
+    await UserServices.deleteUser(id)
+    res.status(200).json({
+      status: 'success',
+      message: 'User deleted successfully',
+    })
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({
+      status: 'fail',
+      message: error || 'Something went wrong',
+    })
+  }
+}
 
 export const UserControllers = {
   createStudent,
   getAllUser,
   getSingleUser,
+  updateUser,
+  deleteUser,
 }
