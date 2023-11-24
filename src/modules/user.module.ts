@@ -38,8 +38,7 @@ userSchema.statics.isUserNameExists = async function (name: string) {
 userSchema.pre('save', async function (next) {
   // console.log(this, 'pre hook : we will save  data');
   // eslint-disable-next-line @typescript-eslint/no-this-alias
-  const user = this // doc
-  // hashing password and save into DB
+  const user = this
   user.password = await bcrypt.hash(
     user.password,
     Number(config.bcrypt_salt_rounds),
