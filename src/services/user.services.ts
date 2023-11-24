@@ -8,7 +8,8 @@ const createUserDB = async (user: TUser) => {
     throw new Error('User name already exists!')
   } else {
     const result = await User.create(user)
-    const { orders, password, ...userDataWithoutSensitiveInfo } = result?._doc
+    const { orders, password, ...userDataWithoutSensitiveInfo } =
+      result.toObject()
     console.log(userDataWithoutSensitiveInfo)
     return userDataWithoutSensitiveInfo
   }

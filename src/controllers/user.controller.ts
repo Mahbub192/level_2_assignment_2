@@ -44,7 +44,10 @@ const getAllUser = async (req: Request, res: Response) => {
 const getSingleUser = async (req: Request, res: Response) => {
   try {
     const id = req.params.userId
-    const result = await UserServices.getSingleUser(id)
+    console.log(47, id)
+    const ID = parseInt(id)
+    console.log(49, ID)
+    const result = await UserServices.getSingleUser(ID)
     res.status(200).json({
       success: true,
       message: 'Get A single User',
@@ -63,8 +66,8 @@ const updateUser = async (req: Request, res: Response) => {
   try {
     const userData = req.body
     const id = req.params.userId
-    console.log(60, id)
-    const result = await UserServices.updateUser(id, userData)
+    const ID = parseInt(id)
+    const result = await UserServices.updateUser(ID, userData)
     res.status(200).json({
       status: 'success',
       message: 'User updated successfully',
@@ -82,7 +85,8 @@ const updateUser = async (req: Request, res: Response) => {
 const deleteUser = async (req: Request, res: Response) => {
   try {
     const id = req.params.userId
-    const result = await UserServices.deleteUser(id)
+    const ID = parseInt(id)
+    const result = await UserServices.deleteUser(ID)
     console.log(78, result)
     res.status(200).json({
       status: 'success',
