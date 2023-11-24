@@ -110,9 +110,9 @@ const insertProduct = async (req: Request, res: Response) => {
     const product = req.body
     const result = await UserServices.insertProductDB(ID, product)
     res.status(200).json({
-      status: 'success',
-      message: 'User deleted successfully',
-      data: result,
+      success: true,
+      message: 'Order created successfully!',
+      data: null,
     })
   } catch (error: any) {
     res.status(500).json({
