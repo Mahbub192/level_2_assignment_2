@@ -32,17 +32,22 @@ const getSingleUser = async (id: number) => {
     throw new Error('No user for this user id')
   }
 }
-
 const updateUser = async (
-  id: string,
-  userData: TUser,
+  id: number,
+  userData: Partial<TUser>,
 ): Promise<TUser | null> => {
-  const result = await User.findByIdAndUpdate(id, userData, {
-    new: true,
-    runValidators: true,
-  })
+  const filter = { userId: id }
+  const updateDoc = {
+    $set: userData,
+  }
 
-  return result
+  try {
+    const result = await User.findOneAndUpdate(filter, updateDoc, { new: true })
+    return result
+  } catch (error) {
+    console.error('Error updating user:', error)
+    throw error
+  }
 }
 
 const deleteUser = async (id: number): Promise<TUser | null> => {
