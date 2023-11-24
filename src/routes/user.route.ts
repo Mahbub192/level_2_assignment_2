@@ -3,10 +3,10 @@ import express from 'express'
 
 const router = express.Router()
 
-router.post('/create-user', UserControllers.createStudent)
-router.get('/all-user', UserControllers.getAllUser)
-router.get('/:id', UserControllers.getSingleUser)
-router.patch('/:id', UserControllers.updateUser)
-router.delete('/:id', UserControllers.deleteUser)
+router.post('/', UserControllers.createUser)
+router.get('/', UserControllers.getAllUser)
+router.get('/:userId', UserControllers.getSingleUser)
+router.put('/:userId', UserControllers.updateUser)
+router.delete('/:userId', UserControllers.deleteUser)
 
 export const UserRoutes = router

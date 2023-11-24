@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose'
-import { TUser } from '../interfaces/user.interfaces'
+import { TUser, UserModel } from '../interfaces/user.interfaces'
 
-const userSchema = new Schema<TUser>({
+const userSchema = new Schema<TUser, UserModel>({
   userId: { type: Number, required: true, unique: true, trim: true },
   username: { type: String, required: true, unique: true, trim: true },
   password: { type: String, required: true },
@@ -24,4 +24,18 @@ const userSchema = new Schema<TUser>({
   },
 })
 
-export const User = model<TUser>('User', userSchema)
+userSchema.statics.isUserExists = async function (id: number) {
+  const existingUser = await User.findOne({ userId: id })
+  return existingUser
+}
+userSchema.statics.isUserNameExists = async function (name: string) {
+  const existingUser = await User.findOne({ username: name })
+  return existingUser
+}
+// userSchema.statics.isUserExists = async function (id: number) {
+//   console.log(28, id)
+//   const existingUser = await User.findOne({ id })
+//   return existingUser
+// }
+
+export const User = model<TUser, UserModel>('User', userSchema)

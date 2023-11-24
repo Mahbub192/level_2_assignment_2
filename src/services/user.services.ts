@@ -2,18 +2,28 @@ import { TUser } from '../interfaces/user.interfaces'
 import { User } from '../modules/user.module'
 
 const createUserDB = async (user: TUser) => {
-  const result = await User.create(user)
-  return result
+  if (await User.isUserExists(user.userId)) {
+    throw new Error('User Id already exists!')
+  } else if (await User.isUserNameExists(user.username)) {
+    throw new Error('User name already exists!')
+  } else {
+    const result = await User.create(user)
+    return result
+  }
 }
 
 const getAllUserDB = async () => {
-  const result = await User.find()
+  const result = await User.find(
+    {},
+    { username: 1, fullName: 1, address: 1, email: 1, age: 1, _id: 0 },
+  )
   return result
 }
 
-const getSingleUser = async (id: string) => {
-  console.log(15, id)
-  const result = await User.findById(id)
+const getSingleUser = async (id: number | string) => {
+  const result = await User.findOne({ userId: id }).select({
+    password: 0,
+  })
   return result
 }
 
