@@ -1,6 +1,8 @@
 import { TUser } from '../interfaces/user.interfaces'
 import { User } from '../modules/user.module'
 
+import { Document, Model } from 'mongoose'
+
 const createUserDB = async (user: TUser) => {
   if (await User.isUserExists(user.userId)) {
     throw new Error('User Id already exists!')
@@ -43,9 +45,20 @@ const updateUser = async (
   return result
 }
 
-const deleteUser = async (id: string): Promise<TUser | null> => {
-  const result = await User.findByIdAndDelete(id)
-  return result
+const deleteUser = async (id: number): Promise<TUser | null> => {
+  if (await User.isUserExists(id)) {
+    const result = await User.findOne({ userId: id }).select({
+      password: 0,
+    })
+    const deleteResult = await User.deleteOne({ userId: id }).exec()
+    if (deleteResult.deletedCount == 1) {
+      return result
+    } else {
+      throw new Error('Delete faild')
+    }
+  } else {
+    throw new Error('No user for this user id')
+  }
 }
 
 export const UserServices = {
