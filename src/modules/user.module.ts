@@ -18,21 +18,6 @@ const userSchema = new Schema<TUser>({
     city: { type: String },
     country: { type: String },
   },
-  orders: {
-    type: [
-      {
-        productName: {
-          type: String,
-        },
-        price: {
-          type: Number,
-        },
-        quantity: {
-          type: Number,
-        },
-      },
-    ],
-  },
 })
 
 export const User = model<TUser>('User', userSchema)
