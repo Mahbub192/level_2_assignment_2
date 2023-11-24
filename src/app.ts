@@ -14,10 +14,10 @@ app.use('/api/users', UserRoutes)
 app.use('/api/users/', UserRoutes)
 app.use('/api/users/', UserRoutes)
 app.use('/api/users/', UserRoutes)
+app.use('api/users/', UserRoutes)
 
 app.get('/', (req: Request, res: Response) => {
-  const a = 10
-  res.send(a)
+  res.send('Server is running')
 })
 
 export default app

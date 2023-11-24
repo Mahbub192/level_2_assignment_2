@@ -1,4 +1,4 @@
-import { TUser } from '../interfaces/user.interfaces'
+import { TUser } from './../interfaces/user.interfaces'
 import { User } from '../modules/user.module'
 
 const createUserDB = async (user: TUser) => {
@@ -80,10 +80,21 @@ const deleteUser = async (id: number): Promise<TUser | null> => {
   }
 }
 
+const insertProductDB = async (id: number, newOrder: TUser) => {
+  const updateOne = {
+    $push: {
+      orders: newOrder,
+    },
+  }
+
+  const result = await User.updateOne({ userId: id }, updateOne)
+  return result
+}
 export const UserServices = {
   createUserDB,
   getAllUserDB,
   getSingleUser,
   updateUser,
   deleteUser,
+  insertProductDB,
 }

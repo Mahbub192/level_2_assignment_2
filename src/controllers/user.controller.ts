@@ -103,10 +103,31 @@ const deleteUser = async (req: Request, res: Response) => {
   }
 }
 
+const insertProduct = async (req: Request, res: Response) => {
+  try {
+    const id = req.params.userId
+    const ID = parseInt(id)
+    const product = req.body
+    const result = await UserServices.insertProductDB(ID, product)
+    res.status(200).json({
+      status: 'success',
+      message: 'User deleted successfully',
+      data: result,
+    })
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: error.message || 'Not deleted',
+      error: error,
+    })
+  }
+}
+
 export const UserControllers = {
   createUser,
   getAllUser,
   getSingleUser,
   updateUser,
   deleteUser,
+  insertProduct,
 }
