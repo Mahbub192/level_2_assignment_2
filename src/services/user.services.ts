@@ -20,11 +20,15 @@ const getAllUserDB = async () => {
   return result
 }
 
-const getSingleUser = async (id: number | string) => {
-  const result = await User.findOne({ userId: id }).select({
-    password: 0,
-  })
-  return result
+const getSingleUser = async (id: number) => {
+  if (await User.isUserExists(id)) {
+    const result = await User.findOne({ userId: id }).select({
+      password: 0,
+    })
+    return result
+  } else {
+    throw new Error('No user for this user id')
+  }
 }
 
 const updateUser = async (

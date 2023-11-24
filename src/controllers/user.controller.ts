@@ -1,7 +1,6 @@
 import { UserServices } from './../services/user.services'
 import { Request, Response } from 'express'
 import { UserValidationSchema } from './userZod'
-import { number } from 'zod'
 
 const createUser = async (req: Request, res: Response) => {
   try {
@@ -17,7 +16,7 @@ const createUser = async (req: Request, res: Response) => {
   } catch (error: any) {
     res.status(500).json({
       success: false,
-      message: error.message || 'something went wrong',
+      message: error.message || 'User id or user name are already exist',
       error: error,
     })
   }
