@@ -38,3 +38,7 @@ Through this router, a specific user can update his information, if that user is
 - router7 = delete method (/api/users/:userId),
 
 A specific user can be deleted from the database through this router
+
+- router8 = get method (/api/users/:userId/orders/total-price),
+
+A specific user can get data (product total price)  from the database through this router.
