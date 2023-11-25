@@ -60,19 +60,19 @@ userSchema.pre('save', async function (next) {
   next()
 })
 
-userSchema.statics.calcTotal = async function (userId: number) {
-  const stats = await this.aggregate([
-    {
-      $match: { product: tourId },
-    },
-    {
-      $group: {
-        _id: '$tour',
-        numberOfRatings: { $sum: 1 },
-        avgRating: { $avg: '$rating' },
-      },
-    },
-  ])
-}
+// userSchema.statics.calcTotal = async function (userId: number) {
+//   const stats = await this.aggregate([
+//     {
+//       $match: { product: tourId },
+//     },
+//     {
+//       $group: {
+//         _id: '$tour',
+//         numberOfRatings: { $sum: 1 },
+//         avgRating: { $avg: '$rating' },
+//       },
+//     },
+//   ])
+// }
 
 export const User = model<TUser, UserModel>('User', userSchema)
