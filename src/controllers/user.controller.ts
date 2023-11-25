@@ -140,6 +140,18 @@ const getProduct = async (req: Request, res: Response) => {
     })
   }
 }
+const getProductTotalPrice = async (req: Request, res: Response) => {
+  const userId = parseInt(req.params.userId)
+  const result = await UserServices.getProductTotalPriceDB(userId)
+
+  res.json({
+    success: true,
+    message: 'Total price calculated successfully!',
+    data: {
+      totalPrice: result, // assuming you want to round to 2 decimal places
+    },
+  })
+}
 
 export const UserControllers = {
   createUser,
@@ -149,4 +161,5 @@ export const UserControllers = {
   deleteUser,
   insertProduct,
   getProduct,
+  getProductTotalPrice,
 }
