@@ -103,6 +103,24 @@ const getProductDB = async (id: number) => {
   }
 }
 
+const getProductTotalPriceDB = async (id: number) => {
+  if (await User.isUserExists(id)) {
+    const result = await User.findOne({ userId: id })
+
+    if (result?.orders) {
+      const totalPrice = result.orders.reduce(
+        (total, order) => total + order.price,
+        0,
+      )
+      return totalPrice.toFixed(2)
+    } else {
+      throw new Error('Orders not found for this user')
+    }
+  } else {
+    throw new Error('No user for this id')
+  }
+}
+
 export const UserServices = {
   createUserDB,
   getAllUserDB,
@@ -111,4 +129,5 @@ export const UserServices = {
   deleteUser,
   insertProductDB,
   getProductDB,
+  getProductTotalPriceDB,
 }
