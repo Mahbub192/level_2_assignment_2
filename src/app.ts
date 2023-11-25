@@ -16,6 +16,7 @@ app.use('/api/users/', UserRoutes)
 app.use('/api/users/', UserRoutes)
 app.use('api/users/', UserRoutes)
 app.use('api/users/', UserRoutes)
+app.use('api/users/', UserRoutes)
 
 app.get('/', (req: Request, res: Response) => {
   res.send('Server is running')
